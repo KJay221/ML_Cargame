@@ -121,9 +121,7 @@ class MLPlay:
             
             
             #條件判斷
-            print(row[player_row-1])
-            print(block2)
-            if block2[1] == 1000 or player_y-block2[1]>250:
+            if block2[1] == 1000 or player_y-block2[1]>200:
                 print("coin")
                 coin=[10000,10000]
                 #吃COIN機制
@@ -133,31 +131,35 @@ class MLPlay:
                     coin_x_temp=abs(coin[0]-player_x)
                     coin_y_temp=abs(coin[1]-player_y)
                     coin_row=checkrow(scene_info["coins"][i][0])
-                    if math.sqrt(coin_x**2+coin_y**2) < math.sqrt(coin_x_temp**2+coin_y_temp**2) and coin_y < player_y and abs(coin_row-player_row) < 3:
+                    if math.sqrt(coin_x**2+coin_y**2) < math.sqrt(coin_x_temp**2+coin_y_temp**2) and scene_info["coins"][i][1] < player_y and abs(coin_row-player_row) < 3:
                         coin=scene_info["coins"][i]
                 if coin[0] == 10000:
                     result = 1
                 else:
                     coin_row=checkrow(coin[0])
-                    if coin_row-player_row > 0 and abs(player_y-block3[1]) > 180:
+                    if coin_row-player_row > 0 and ((abs(player_y-block3[1]) > 60 and player_y < block3[1]) or (abs(player_y-block3[1]) > 200 and player_y > block3[1])) and player_row != 9:
                         result = 5
-                    elif coin_row-player_row < 0 and abs(player_y-block1[1]) > 180:
+                    elif coin_row-player_row < 0 and ((abs(player_y-block1[1]) > 60 and player_y < block1[1]) or (abs(player_y-block1[1]) > 200 and player_y > block1[1])) and player_row != 1:
                         result = 6
                     else:
                         result = 1
             else:
                 print("rule")
-                if ((abs(player_y-block1[1]) > 80 and player_y < block1[1]) or (abs(player_y-block1[1]) > 300 and player_y > block1[1])) and player_row != 1:
-                   result = 6 
-                elif ((abs(player_y-block3[1]) > 80 and player_y < block3[1]) or (abs(player_y-block3[1]) > 300 and player_y > block3[1])) and player_row != 9:
-                    result = 5
+                if ((abs(player_y-block3[1]) > 80 and player_y < block3[1]) or (abs(player_y-block3[1]) > 270 and player_y > block3[1])) and player_row != 9:
+                   result = 5 
+                elif ((abs(player_y-block1[1]) > 80 and player_y < block1[1]) or (abs(player_y-block1[1]) > 270 and player_y > block1[1])) and player_row != 1:
+                    result = 6
                 else:
                     result = 0
-            if abs(player_y-block2[1]) < 190:
+            if abs(player_y-block2[1]) < 140:
                 result = 0 
             if abs(player_y-block2[1]) < 120:
-                result = 2
-            
+                if ((abs(player_y-block3[1]) > 130 and player_y < block3[1]) or (abs(player_y-block3[1]) > 130 and player_y > block3[1])) and player_row != 9:
+                   result = 7 
+                elif ((abs(player_y-block1[1]) > 130 and player_y < block1[1]) or (abs(player_y-block1[1]) > 130 and player_y > block1[1])) and player_row != 1:
+                    result = 8
+                else:
+                    result = 2 
         else :
             result = 0
 
