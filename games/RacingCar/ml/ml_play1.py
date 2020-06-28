@@ -19,7 +19,9 @@ class MLPlay:
             self.player_no = 3
         self.car_vel = 0
         self.car_pos = ()
-        pass
+        self.coin_num = 0
+        self.computer_cars = []
+        self.coins_pos = []
     
 
 
